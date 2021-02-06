@@ -7,33 +7,43 @@ import { addProduct } from '../actions/productsActions';
 import ProductList from './ProductList';
 import { fetchProducts } from '../actions/productsActions';
 
-const App = () => {
-  const [newProduct, setNewProduct] = useState('')
+const useStyles = makeStyles({
+  app: {
+    fontFamily: 'Roboto, Arial, Helvetica, sans-serif',
+  }.
+});
 
-  // const products = useSelector(state => state.products.value);
+const App = () => {
   const dispatch = useDispatch();
 
-  const handleAddProduct = () => {
-    dispatch(addProduct(newProduct))
-    setNewProduct('')
-  }
-
+  useEffect(() => dispatch(getProducts()), [dispatch]);
   return (
-    <div>
-      <h1>HELLO WORLD</h1>
-      {/* <input type="text" value={newProduct} onChange={(e) => setNewProduct(e.target.value)} />
+    <div className={styleMedia.app}>
+      <CategoriesList />
+    </div>
+  );
+}
+const handleAddProduct = () => {
+  dispatch(addProduct(newProduct))
+  setNewProduct('')
+}
+
+return (
+  <div>
+    <h1>HELLO WORLD</h1>
+    {/* <input type="text" value={newProduct} onChange={(e) => setNewProduct(e.target.value)} />
       <button onClick={handleAddProduct}>
         Add product to store
       </button> */}
-      <button
-        onClick={() => dispatch(fetchProducts())}
-      >
-        fetch products
+    <button
+      onClick={() => dispatch(fetchProducts())}
+    >
+      fetch products
       </button>
 
-      <ProductList />
-    </div >
-  );
+    <ProductList />
+  </div>
+);
 }
 
 export default App;
