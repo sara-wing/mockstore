@@ -8,7 +8,7 @@ export default function productsReducer(state = {}, action) {
     case 'POPULATE_PRODUCTS':
       const productsByCategory = action.payload.reduce(
         (accumulator, product) => {
-          const category = product.cateogry;
+          const category = product.category;
           return {
             ...accumulator,
             [category]: [...(accumulator[category]) || [], product],
@@ -16,7 +16,7 @@ export default function productsReducer(state = {}, action) {
         },
         {}
       );
-      return { ...state, productsByCategory };
+      return { ...state, productsByCategory }
 
     default:
       return state;

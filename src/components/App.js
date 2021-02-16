@@ -1,49 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { addProduct } from '../actions/productsActions';
-// import { CategoriesList.react } from './CategoriesList.react.js';
+// import { addProduct } from '../actions/productsActions';
+import CategoriesList from './CategoriesList';
 // import thunk from 'redux-thunk';
-import ProductList from './ProductList';
+// import ProductList from './ProductList';
 import { fetchProducts } from '../actions/productsActions';
+import { makeStyles } from '@material-ui/core';
+
 
 const useStyles = makeStyles({
   app: {
     fontFamily: 'Roboto, Arial, Helvetica, sans-serif',
-  }.
+  }
 });
 
 const App = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(getProducts()), [dispatch]);
+  useEffect(() => dispatch(fetchProducts()), [dispatch]);
   return (
     <div className={styleMedia.app}>
       <CategoriesList />
     </div>
   );
-}
-const handleAddProduct = () => {
-  dispatch(addProduct(newProduct))
-  setNewProduct('')
-}
-
-return (
-  <div>
-    <h1>HELLO WORLD</h1>
-    {/* <input type="text" value={newProduct} onChange={(e) => setNewProduct(e.target.value)} />
-      <button onClick={handleAddProduct}>
-        Add product to store
-      </button> */}
-    <button
-      onClick={() => dispatch(fetchProducts())}
-    >
-      fetch products
-      </button>
-
-    <ProductList />
-  </div>
-);
 }
 
 export default App;

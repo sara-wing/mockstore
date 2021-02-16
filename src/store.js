@@ -1,8 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { slice as productsSlice } from './reducers/productsReducer';
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./reducers/rootReducer";
+import thunkMiddleware from 'redux-thunk'
+// import thunk
 
-export default configureStore({
-  reducer: {
-    products: productsSlice.reducer,
-  },
-}); 
+
+const middleware = applyMiddleware(thunkMiddleware)
+
+export default createStore(rootReducer, undefined, middleware);
