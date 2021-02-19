@@ -2,11 +2,20 @@
 //   Has selector that returns products grouped by category
 //   Displays loading state or categories */}
 
-import { CardMedia, Typography, makeStyles, CardActionArea, CardContent, CircularProgress, Card, Button, capitalize } from "@material-ui/core";
-import { useSelector } from 'react-redux';
-
+import { CardMedia, Typography, makeStyles, CardActionArea, CardContent, CircularProgress, Card } from "@material-ui/core";
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategory } from '../actions/appActions';
+// import CardItem from './CardItem';
 
 const useStyles = makeStyles({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 20
+  },
+  card: {
+    width: 200,
+  },
   categoryImage: {
     height: 120,
     width: 220,
@@ -20,15 +29,23 @@ export default function CategoriesList() {
   const productsByCategory = useSelector(
     state => state.products?.productsByCategory
   );
+
+  const state = useSelector(state => state);
+
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const clickHandler = selectedCategory => {
+    return dispatch(setCategory(selectedCategory));
+  }
+
   const renderProducts = () => {
-    const products = Object.keys(productsByCategory || {}).map((category, index) => {
+    const products = Object.keys(productsByCategory || {}).map((selectedCategory, index) => {
       return (
-        <Card key={index} className={classes.card}>
-          <CardActionArea>
+        <Card key={index} className={classes.card} >
+          <CardActionArea onClick={() => clickHandler(selectedCategory)}>
             <CardMedia
               className={classes.categoryImage}
-              image={productsByCategory[category][0].image}
+              image={productsByCategory[selectedCategory][0].image}
             />
             <CardContent>
               <Typography
@@ -36,7 +53,7 @@ export default function CategoriesList() {
                 color='primary'
                 className={classes.titleCase}
               >
-                {category}
+                {selectedCategory}
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -44,7 +61,11 @@ export default function CategoriesList() {
       );
     })
 
-    return products
+    return (
+      <div className={classes.container}>
+        {products}
+      </div>
+    )
   }
 
   return (
