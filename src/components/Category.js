@@ -1,12 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CardItem from './CardItem';
 import { makeStyles, Typography } from '@material-ui/core';
+import { setProduct } from '../actions/appActions';
 
 const useStyles = makeStyles({
   categoryTitle: {
     display: 'flex',
-    justifyContet: 'center',
+    justifyContent: 'center',
     marginTop: 20,
   },
   container: {
@@ -21,27 +22,35 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Category({ selectedCategory }) {
+export default function Category() {
   const classes = useStyles();
 
+  const { selectedCategory } = useSelector(state => state.app)
+
   const products = useSelector(
-    state => state.products.productsByCategory[selectedCategory]
+    state => (state.products.productsByCategory || {})[selectedCategory]
   );
+
+  const dispatch = useDispatch();
+  const clickHandler = selectedProductID => {
+    console.log(selectedProductID);
+    dispatch(setProduct(selectedProductID));
+  }
 
   return (
     <div>
       <div className={classes.categoryTitle}>
-        <Typography variant='h2' className={classes.titleCase}>
+        <Typography variant='h5' className={classes.titleCase}>
           {selectedCategory}
         </Typography>
       </div>
       <div className={classes.container}>
-        {products.map((product, index) => (
+        {(products || []).map((selectedProductID, index) => (
           <CardItem
-            key={product.id}
-            label={product.title}
-            imageURL={product.image}
-            clickHandler={() => { }}
+            key={selectedProductID.id}
+            label={selectedProductID.title}
+            imageURL={selectedProductID.image}
+            onClick={() => clickHandler(selectedProductID)}
           />
         ))}
       </div>

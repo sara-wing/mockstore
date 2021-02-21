@@ -11,13 +11,17 @@ export default function productsReducer(state = {}, action) {
         },
         {}
       );
-      return { ...state, products: action.payload, productsByCategory }
+
+      // const productsByID = {}
+
+      return {
+        ...state,
+        products: action.payload,
+        productsByCategory,
+        // productsByID:
+      }
 
     default:
       return state;
   }
 }
-
-// productsByID = {
-//   productID: {},
-// }

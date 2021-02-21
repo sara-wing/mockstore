@@ -4,6 +4,9 @@ import CategoriesList from './CategoriesList';
 import Category from './Category';
 import { getProducts } from '../actions/productsActions';
 import { makeStyles } from '@material-ui/core';
+import { SET_CATEGORY } from '../actions/appActions';
+import { SET_PRODUCT } from '../actions/appActions';
+import ProductDetails from './ProductDetails';
 
 const useStyles = makeStyles({
   app: {
@@ -15,16 +18,27 @@ const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { selectedCategory } = useSelector(state => state.app);
+  const { activePage } = useSelector(state => state.app);
+
+  console.log(`rendering App. activePage is`, activePage);
+
 
   useEffect(() => dispatch(getProducts()), [dispatch]);
+
+  function activePageSwitch() {
+    switch (activePage) {
+      case 'category':
+        return <Category />
+      case 'product':
+        return <ProductDetails />
+      default:
+        return <CategoriesList />;
+    }
+  }
+
   return (
     <div className={classes.app}>
-      {selectedCategory != null ? (
-        <Category selectedCategory={selectedCategory} />
-      ) : (
-          <CategoriesList />
-        )}
+      {activePageSwitch()}
     </div>
   );
 }

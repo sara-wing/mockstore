@@ -1,24 +1,21 @@
-// <CategoriesList />
-//   Has selector that returns products grouped by category
-//   Displays loading state or categories */}
-
 import { CardMedia, Typography, makeStyles, CardActionArea, CardContent, CircularProgress, Card } from "@material-ui/core";
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategory } from '../actions/appActions';
+// import { setProduct } from '../actions/appActions';
 // import CardItem from './CardItem';
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    padding: 20
+    padding: 20,
   },
-  card: {
-    width: 200,
-  },
+  // card: {
+  //   width: 200,
+  // },
   categoryImage: {
-    height: 120,
-    width: 220,
+    height: 200,
+    width: 200,
   },
   titleCase: {
     textTransform: 'capitalize',
@@ -35,7 +32,8 @@ export default function CategoriesList() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const clickHandler = selectedCategory => {
-    return dispatch(setCategory(selectedCategory));
+    console.log(selectedCategory);
+    dispatch(setCategory(selectedCategory));
   }
 
   const renderProducts = () => {
@@ -57,7 +55,7 @@ export default function CategoriesList() {
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
+        </Card >
       );
     })
 
