@@ -4,8 +4,8 @@ import CategoriesList from './CategoriesList';
 import Category from './Category';
 import { getProducts } from '../actions/productsActions';
 import { makeStyles } from '@material-ui/core';
-import { SET_CATEGORY } from '../actions/appActions';
-import { SET_PRODUCT } from '../actions/appActions';
+// import  SET_CATEGORY  from '../actions/appActions';
+// import { SET_PRODUCT } from '../actions/appActions';
 import ProductDetails from './ProductDetails';
 
 const useStyles = makeStyles({

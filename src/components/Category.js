@@ -32,9 +32,9 @@ export default function Category() {
   );
 
   const dispatch = useDispatch();
-  const clickHandler = selectedProductID => {
-    console.log(selectedProductID);
-    dispatch(setProduct(selectedProductID));
+  const clickHandler = productID => {
+    console.log(productID);
+    dispatch(setProduct(productID));
   }
 
   return (
@@ -45,14 +45,16 @@ export default function Category() {
         </Typography>
       </div>
       <div className={classes.container}>
-        {(products || []).map((selectedProductID, index) => (
-          <CardItem
-            key={selectedProductID.id}
-            label={selectedProductID.title}
-            imageURL={selectedProductID.image}
-            onClick={() => clickHandler(selectedProductID)}
-          />
-        ))}
+        {(products || []).map((product, index) => {
+          return (
+            <CardItem
+              key={product.id}
+              label={product.title}
+              imageURL={product.image}
+              onClick={() => clickHandler(product.id)}
+            />
+          )
+        })}
       </div>
     </div>
   )

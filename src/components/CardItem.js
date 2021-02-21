@@ -19,12 +19,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CardItem({ label, imageURL, clickHandler }) {
+export default function CardItem({ label, imageURL, onClick }) {
   const classes = useStyles();
   return (
     <div className={classes.cardContainer}>
       <Card>
-        <CardActionArea onClick={clickHandler}>
+        <CardActionArea onClick={onClick}>
           <CardMedia className={classes.image} image={imageURL} />
           <CardContent>
             <Typography variant='h6' color='primary' className={classes.title}>
