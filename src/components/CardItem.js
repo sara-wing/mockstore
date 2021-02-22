@@ -1,8 +1,7 @@
-
 import { CardMedia, Typography, makeStyles, CardActionArea, CardContent, Card } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  container: {
+  cardContainer: {
     display: 'flex',
     justifyContent: 'center',
     padding: 20
@@ -10,7 +9,7 @@ const useStyles = makeStyles({
   card: {
     width: 200,
   },
-  categoryImage: {
+  image: {
     height: 120,
     width: 220,
   },
@@ -27,7 +26,7 @@ export default function CardItem({ label, imageURL, onClick }) {
         <CardActionArea onClick={onClick}>
           <CardMedia className={classes.image} image={imageURL} />
           <CardContent>
-            <Typography variant='h6' color='primary' className={classes.title}>
+            <Typography variant='h8' color='primary' className={classes.title}>
               {label}
             </Typography>
           </CardContent>

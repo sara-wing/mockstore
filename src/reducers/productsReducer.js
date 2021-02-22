@@ -12,13 +12,17 @@ export default function productsReducer(state = {}, action) {
         {}
       );
 
-      // const productsByID = {}
+      const productsByID = {};
+      action.payload.forEach(product => {
+        // productsByID[product[id]] = product;
+        productsByID[product.id] = product;
+      });
 
       return {
         ...state,
         products: action.payload,
         productsByCategory,
-        // productsByID:
+        productsByID
       }
 
     default:

@@ -26,26 +26,22 @@ export default function Category() {
   const classes = useStyles();
 
   const { selectedCategory } = useSelector(state => state.app)
-
-  const products = useSelector(
-    state => (state.products.productsByCategory || {})[selectedCategory]
-  );
+  const products = useSelector(state => state.products.productsByCategory[selectedCategory]);
 
   const dispatch = useDispatch();
   const clickHandler = productID => {
-    console.log(productID);
     dispatch(setProduct(productID));
   }
 
   return (
     <div>
       <div className={classes.categoryTitle}>
-        <Typography variant='h5' className={classes.titleCase}>
+        <Typography variant='h8' className={classes.titleCase}>
           {selectedCategory}
         </Typography>
       </div>
       <div className={classes.container}>
-        {(products || []).map((product, index) => {
+        {products.map((product, index) => {
           return (
             <CardItem
               key={product.id}

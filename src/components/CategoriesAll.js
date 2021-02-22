@@ -23,13 +23,10 @@ const useStyles = makeStyles({
 });
 
 export default function CategoriesList() {
-  const productsByCategory = useSelector(
-    state => state.products?.productsByCategory
-  );
-
-  const state = useSelector(state => state);
+  const productsByCategory = useSelector(state => state.products?.productsByCategory);
 
   const classes = useStyles();
+
   const dispatch = useDispatch();
   const clickHandler = selectedCategory => {
     console.log(selectedCategory);
@@ -68,7 +65,7 @@ export default function CategoriesList() {
 
   return (
     <div className={classes.container}>
-      {productsByCategory === null ? <CircularProgress size={24} /> : renderProducts()}
+      {productsByCategory ? renderProducts() : <CircularProgress size={24} />}
     </div>
   )
 }

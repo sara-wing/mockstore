@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CategoriesList from './CategoriesList';
+import CategoriesAll from './CategoriesAll';
 import Category from './Category';
 import { getProducts } from '../actions/productsActions';
 import { makeStyles } from '@material-ui/core';
@@ -32,7 +32,7 @@ const App = () => {
       case 'product':
         return <ProductDetails />
       default:
-        return <CategoriesList />;
+        return <CategoriesAll />;
     }
   }
 
