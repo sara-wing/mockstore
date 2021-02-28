@@ -1,64 +1,115 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { Typography, makeStyles, InputLabel, MenuItem, FormControl, Select } from "@material-ui/core";
+import { CardMedia, Typography, makeStyles, InputLabel, MenuItem, FormControl, Select, Button } from "@material-ui/core";
+import { grey } from '@material-ui/core/colors';
+// import { Category } from './category';
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    padding: 20,
+  },
+  image: {
+    width: 500,
+    height: 500,
+    margin: 10,
+  },
+  formControl: {
+    margin: 10,
+    minWidth: 100,
+  },
+  productInfo: {
+    margin: 10,
+    maxWidth: 500
+    // display: flex,
   },
   sizeSelect: {
     height: 50,
     width: 80,
-    padding: 20,
+    padding: 10,
   },
   titleCase: {
     textTransform: 'capitalize',
   },
+  description: {
+    color: grey,
+    padding: 10,
+  }
 });
 
 export default function ProductDetails() {
   const classes = useStyles();
-  const { selectedProductID } = useSelector(state => state.app)
-  const selectedProduct = useSelector(state => state.products.productsByID[selectedProductID]);
+  const { selectedProductID, selectedCategory } = useSelector(state => state.app)
 
-  console.log(selectedProduct.description);
+  // const selectedProduct = useSelector(state => state.products.productsByID[selectedProductID]);
+  const productsByID = useSelector(state => state.products.productsByID)
+  const selectedProduct = productsByID[selectedProductID];
 
+  const renderSelectSize = () => {
+    if (!["men clothing", "women clothing"].includes(selectedCategory)) { return null }
 
-  return (
-    <div>
-      <div className={classes.categoryTitle}>
-        <Typography variant='h5' className={classes.titleCase}>
-          {/* {selectedCategory} */}
-        </Typography>
-      </div>
-      <FormControl variant="filled" className={classes.sizeSelect}>
+    return (
+      <FormControl variant="filled" className={classes.formControl}>
         <InputLabel id="select-size">Size</InputLabel>
         <Select
           labelId="select-size"
           id="select-size"
+          defaultValue=""
         >
-          <MenuItem>XS</MenuItem>
-          <MenuItem>S</MenuItem>
-          <MenuItem>M</MenuItem>
-          <MenuItem>L</MenuItem>
-          <MenuItem>XL</MenuItem>
+          <MenuItem value="S">S</MenuItem>
+          <MenuItem value="M">M</MenuItem>
+          <MenuItem value="L">L</MenuItem>
+          <MenuItem value="XL">XL</MenuItem>
         </Select>
       </FormControl>
-      <FormControl variant="filled" className={classes.quantitySelect}>
-        <InputLabel id="select-quantity">Quantity</InputLabel>
-        <Select
-          labelId="select-quantity"
-          id="select-quantity"
-        >
-          <MenuItem>1</MenuItem>
-          <MenuItem>2</MenuItem>
-          <MenuItem>3</MenuItem>
-          <MenuItem>4</MenuItem>
-          <MenuItem>5</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+    )
+  }
+
+  return (
+    <div class={classes.container}>
+      <div class={classes.image}>
+        <CardMedia
+          className={classes.image}
+          image={selectedProduct.image}
+          title="product image"
+        />
+      </div>
+      <div className={classes.productInfo}>
+        <div className={classes.productTitle}>
+          <Typography variant='h6' className={classes.titleCase}>
+            {selectedProduct.title}
+          </Typography>
+        </div>
+        <div className={classes.price}>
+          <Typography variant='h8'>
+            ${selectedProduct.price}
+          </Typography>
+        </div>
+        {renderSelectSize()}
+        <FormControl variant="filled" className={classes.formControl}>
+          <InputLabel id="select-quantity">Quantity</InputLabel>
+          <Select
+            labelId="select-quantity"
+            id="select-quantity"
+            defaultValue=""
+          >
+
+            <MenuItem value={1}>1</MenuItem>
+            <MenuItem value={2}>2</MenuItem>
+            <MenuItem value={3}>3</MenuItem>
+            <MenuItem value={4}>4</MenuItem>
+            <MenuItem value={5}>5</MenuItem>
+          </Select>
+        </FormControl>
+        <div className={classes.description}>
+          <Typography variant='h8'>
+            {selectedProduct.description}
+          </Typography>
+        </div>
+        <Button variant="contained" color="primary">
+          Add to Cart
+        </Button>
+      </div>
+    </div >
   )
 }

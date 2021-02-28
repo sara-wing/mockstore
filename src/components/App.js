@@ -31,8 +31,10 @@ const App = () => {
         return <Category />
       case 'product':
         return <ProductDetails />
+      case 'categories-all':
+        return <CategoriesAll />
       default:
-        return <CategoriesAll />;
+        return null;
     }
   }
 

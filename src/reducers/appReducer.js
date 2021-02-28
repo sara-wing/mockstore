@@ -1,7 +1,7 @@
 import { SET_CATEGORY } from '../actions/appActions';
 import { SET_PRODUCT } from '../actions/appActions';
 
-export default function appReducer(state = {}, action) {
+export default function appReducer(state = { activePage: 'categories-all' }, action) {
   switch (action.type) {
     case SET_CATEGORY:
       return { ...state, selectedCategory: action.payload, activePage: 'category' }
