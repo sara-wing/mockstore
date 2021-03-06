@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { CardMedia, Typography, makeStyles, InputLabel, MenuItem, FormControl, Select, Button } from "@material-ui/core";
 import { grey } from '@material-ui/core/colors';
-// import { Category } from './category';
 
 const useStyles = makeStyles({
   container: {
@@ -41,7 +40,6 @@ export default function ProductDetails() {
   const classes = useStyles();
   const { selectedProductID, selectedCategory } = useSelector(state => state.app)
 
-  // const selectedProduct = useSelector(state => state.products.productsByID[selectedProductID]);
   const productsByID = useSelector(state => state.products.productsByID)
   const selectedProduct = productsByID[selectedProductID];
 
