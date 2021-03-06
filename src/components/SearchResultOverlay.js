@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
+import CardItem from './CardItem';
+// import { setProduct } from '../actions/appActions';
 
 const useStyles = makeStyles({
-  resultContainer: {
+  searchContainer: {
     backgroundColor: 'white',
     position: 'absolute',
     zIndex: 1,
@@ -15,22 +17,61 @@ const useStyles = makeStyles({
 export default function SearchResultOverlay() {
   const classes = useStyles();
   const { searchValue } = useSelector(state => state.app);
-  const { productsByID, selectedCategory } = useSelector(state => state.products);
-
-  if(searchValue.length > 0) {
-    return (
-      <div className={classes.overlayContainer}>
-        <h1>Search Results for "{searchValue}"</h1>
-      </div>
-    )
-  } else {
+  const { products } = useSelector(state => state.products);
+  
+  // const dispatch = useDispatch();
+  // const clickHandler = productID => {
+  //   dispatch(setProduct(productID));
+  // }
+  
+  if(searchValue.length===0) {
     return null
-  }
-  if(searchValue.length > 2) {
+  };
+  
+  const renderSearchedProducts = () => {
+    if(searchValue.length < 2) {
+      return null
+    };
+
+    const matchingProducts = products.filter((product) => {
+      const titleMatches = product.title.toLowerCase().includes(searchValue);
+      const categoryMatches = product.category.toLowerCase().includes(searchValue);
+      const descriptionMatches = product.description.toLowerCase().includes(searchValue);
+      return titleMatches || categoryMatches || descriptionMatches;
+    });
+    console.log(`matchingProducts`, matchingProducts);
+
+    // find matching products
+    // render/return matching products
     return (
-      <div className={classes.resultContainer}>
-        <div>{productsByID.includes(searchValue)}</div>
-      </div>
-      )
-    }
-}
+      <>
+        {
+          matchingProducts.map((product, index) => {
+            return (
+              <CardItem
+                key={product.id}
+                label={product.title}
+                imageURL={product.image}
+                // onClick={() => clickHandler(product.id)}
+              />
+            )
+          })
+        }
+      </>
+    )
+  }
+
+  //   && (
+  //     <div>{products.includes(searchValue)}</div>
+  //   )}
+  // }
+
+  console.log('rendering SearchResultOverlay... searchValue: ', searchValue);
+    
+  return (
+    <div className={classes.searchContainer}>
+      <h1>Search Results for "{searchValue}"</h1>
+     {renderSearchedProducts()}
+    </div>
+  )
+};
