@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   clearResult: {
     color: 'gray',
     textAlign: 'right',
-    padding: '10px',
+    padding: '20px',
     top: 0,
     fontWeight: 'bold',
     cursor: 'pointer',
