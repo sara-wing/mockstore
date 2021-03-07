@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import CardItem from './CardItem';
 import { setProduct } from '../actions/appActions';
+import { setSearchTerm } from '../actions/appActions';
 
 const useStyles = makeStyles({
   searchContainer: {
@@ -11,6 +12,14 @@ const useStyles = makeStyles({
     zIndex: 1,
     width: '100%',
     height: '100vh',
+  },
+  clearResult: {
+    color: 'gray',
+    textAlign: 'right',
+    padding: '10px',
+    top: 0,
+    fontWeight: 'bold',
+    cursor: 'pointer',
   }
 });
 
@@ -19,11 +28,13 @@ export default function SearchResultOverlay() {
   const { searchValue } = useSelector(state => state.app);
   const { products } = useSelector(state => state.products);
   
-  // const matchingProduct = useSelector(state => state.products.productsByCategory[selectedCategory]);
-
   const dispatch = useDispatch();
-  const clickHandler = selectedProductID => {
-    dispatch(setProduct(selectedProductID));
+  const clickHandler = productID => {
+    dispatch(setProduct(productID));
+  }
+
+  const clearSearchValue = () => {
+    dispatch(setSearchTerm(''));
   }
   
   if(searchValue.length===0) {
@@ -41,7 +52,6 @@ export default function SearchResultOverlay() {
       const descriptionMatches = product.description.toLowerCase().includes(searchValue);
       return titleMatches || categoryMatches || descriptionMatches;
     });
-    console.log(`matchingProducts`, matchingProducts);
 
     return (
       <>
@@ -60,10 +70,13 @@ export default function SearchResultOverlay() {
       </>
     )
   }
-  console.log('rendering SearchResultOverlay... searchValue: ', searchValue);
     
   return (
     <div className={classes.searchContainer}>
+      <h5 
+          className={classes.clearResult}
+          onClick={() => clearSearchValue()}>CLEAR SEARCH RESULTS
+      </h5>
       <h1>Search Results for "{searchValue}"</h1>
      {renderSearchedProducts()}
     </div>

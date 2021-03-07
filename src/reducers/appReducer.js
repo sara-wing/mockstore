@@ -8,7 +8,7 @@ export default function appReducer(state = { activePage: 'home', searchValue: ''
     case SET_CATEGORY:
       return { ...state, selectedCategory: action.payload, activePage: 'category' }
     case SET_PRODUCT:
-      return { ...state, selectedProductID: action.payload, activePage: 'product' }
+      return { ...state, selectedProductID: action.payload, activePage: 'product', searchMode: false }
     case NAVIGATE_HOME:
       return { ...state, activePage: 'home' }
     case SET_SEARCH:

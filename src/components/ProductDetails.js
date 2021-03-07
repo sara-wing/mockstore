@@ -20,7 +20,6 @@ const useStyles = makeStyles({
   productInfo: {
     margin: 10,
     maxWidth: 500
-    // display: flex,
   },
   sizeSelect: {
     height: 50,

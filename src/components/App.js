@@ -14,9 +14,9 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import { setSearchTerm } from '../actions/appActions';
 import SearchResultOverlay from './SearchResultOverlay';
-import { TramRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -58,6 +58,17 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  clearIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   inputRoot: {
     color: 'inherit',
   },
@@ -65,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingRight: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -84,8 +96,11 @@ const App = () => {
 
   useEffect(() => dispatch(getProducts()), [dispatch]);
 
-  const handleChange = event => {
+  const handleChangeSearch = event => {
     dispatch(setSearchTerm(event.target.value));
+  }
+  const handleChangeClear = event => {
+    dispatch(setSearchTerm(''));
   }
   function activePageSwitch() {
     switch (activePage) {
@@ -111,39 +126,45 @@ const App = () => {
 
   return (
     <div className={classes.app}>
-        <AppBar position="sticky">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Mock Store
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                type="text"
-                value={searchValue}
-                onChange={handleChange}
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
+      <AppBar position="sticky">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography className={classes.title} variant="h6" noWrap>
+            Mock Store
+          </Typography>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
             </div>
-          </Toolbar>
-        </AppBar>
-        {searchModeSwitch()}
-        {activePageSwitch()}
+            <InputBase
+              type="text"
+              value={searchValue}
+              onChange={handleChangeSearch}
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+            {
+              searchValue.length > 0 &&
+              <div className={classes.clearIcon} onClick={handleChangeClear}>
+                <ClearIcon />
+              </div>
+            }
+          </div>
+        </Toolbar>
+      </AppBar>
+      {searchModeSwitch()}
+      {activePageSwitch()}
     </div>
   )
 }
