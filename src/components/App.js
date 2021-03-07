@@ -116,14 +116,11 @@ const App = () => {
   }
 
   function searchModeSwitch() {
-    switch (searchMode) {
-      case true:
-        return <SearchResultOverlay />
-      default:
-        return null;
-    }
+    if(searchMode===true) {
+      return <SearchResultOverlay />
+      } return null;
   }
-
+  
   return (
     <div className={classes.app}>
       <AppBar position="sticky">

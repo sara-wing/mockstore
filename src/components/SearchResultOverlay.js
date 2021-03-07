@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   searchContainer: {
     backgroundColor: 'white',
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 99,
     width: '100%',
     height: '100vh',
   },
