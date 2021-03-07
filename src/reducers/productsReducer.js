@@ -14,7 +14,6 @@ export default function productsReducer(state = {}, action) {
 
       const productsByID = {};
       action.payload.forEach(product => {
-        // productsByID[product[id]] = product;
         productsByID[product.id] = product;
       });
 

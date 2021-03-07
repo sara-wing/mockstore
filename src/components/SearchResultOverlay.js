@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import CardItem from './CardItem';
-// import { setProduct } from '../actions/appActions';
+import { setProduct } from '../actions/appActions';
 
 const useStyles = makeStyles({
   searchContainer: {
@@ -19,17 +19,19 @@ export default function SearchResultOverlay() {
   const { searchValue } = useSelector(state => state.app);
   const { products } = useSelector(state => state.products);
   
-  // const dispatch = useDispatch();
-  // const clickHandler = productID => {
-  //   dispatch(setProduct(productID));
-  // }
+  // const matchingProduct = useSelector(state => state.products.productsByCategory[selectedCategory]);
+
+  const dispatch = useDispatch();
+  const clickHandler = selectedProductID => {
+    dispatch(setProduct(selectedProductID));
+  }
   
   if(searchValue.length===0) {
     return null
   };
   
   const renderSearchedProducts = () => {
-    if(searchValue.length < 2) {
+    if(searchValue.length < 3) {
       return null
     };
 
@@ -41,8 +43,6 @@ export default function SearchResultOverlay() {
     });
     console.log(`matchingProducts`, matchingProducts);
 
-    // find matching products
-    // render/return matching products
     return (
       <>
         {
@@ -52,7 +52,7 @@ export default function SearchResultOverlay() {
                 key={product.id}
                 label={product.title}
                 imageURL={product.image}
-                // onClick={() => clickHandler(product.id)}
+                onClick={() => clickHandler(product.id)}
               />
             )
           })
@@ -60,12 +60,6 @@ export default function SearchResultOverlay() {
       </>
     )
   }
-
-  //   && (
-  //     <div>{products.includes(searchValue)}</div>
-  //   )}
-  // }
-
   console.log('rendering SearchResultOverlay... searchValue: ', searchValue);
     
   return (

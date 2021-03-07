@@ -1,8 +1,6 @@
 import { CardMedia, Typography, makeStyles, CardActionArea, CardContent, CircularProgress, Card } from "@material-ui/core";
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategory } from '../actions/appActions';
-// import { setProduct } from '../actions/appActions';
-// import CardItem from './CardItem';
 
 const useStyles = makeStyles({
   container: {
@@ -29,7 +27,6 @@ export default function CategoriesList() {
 
   const dispatch = useDispatch();
   const clickHandler = selectedCategory => {
-    console.log(selectedCategory);
     dispatch(setCategory(selectedCategory));
   }
 

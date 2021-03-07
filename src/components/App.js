@@ -16,6 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { setSearchTerm } from '../actions/appActions';
 import SearchResultOverlay from './SearchResultOverlay';
+import { TramRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -79,7 +80,7 @@ const App = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { activePage, searchValue } = useSelector(state => state.app);
+  const { activePage, searchValue, searchMode } = useSelector(state => state.app);
 
   useEffect(() => dispatch(getProducts()), [dispatch]);
 
@@ -94,6 +95,15 @@ const App = () => {
         return <ProductDetails />
       case 'home':
         return <Home />
+      default:
+        return null;
+    }
+  }
+
+  function searchModeSwitch() {
+    switch (searchMode) {
+      case true:
+        return <SearchResultOverlay />
       default:
         return null;
     }
@@ -132,7 +142,7 @@ const App = () => {
             </div>
           </Toolbar>
         </AppBar>
-        <SearchResultOverlay />
+        {searchModeSwitch()}
         {activePageSwitch()}
     </div>
   )
